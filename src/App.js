@@ -3,12 +3,31 @@ import paginationFactory from "react-bootstrap-table2-paginator";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { DATA } from "./constants";
 import BootStrapTable from "react-bootstrap-table-next";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 function App() {
+  const [datum, setdatum] = useState([]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await fetch(
+          "https://geektrust.s3-ap-southeast-1.amazonaws.com/adminui-problem/members.json"
+        );
+        if (!response.ok) {
+          throw new Error("Network response was not ok.");
+        }
+        const data = await response.json();
+        // console.log(data);
+        setdatum(data);
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    };
+    fetchData();
+  }, []);
   const [selected, setSelected] = useState([]);
   const [searchvalue, setsearchvalue] = useState("");
-  const [datum, setdatum] = useState(DATA);
 
   const handleOnSelect = (row, isSelect) => {
     if (isSelect) {
@@ -86,7 +105,7 @@ function App() {
     <div className="App">
       <div className=" d-flex justify-content-between align-items-center me-2">
         <div>
-          <form onSubmit={(e)=>e.preventDefault()}>
+          <form onSubmit={(e) => e.preventDefault()}>
             <input
               type="text"
               style={{ borderRadius: "10px", margin: "10px" }}
