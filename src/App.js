@@ -86,15 +86,17 @@ function App() {
     <div className="App">
       <div className=" d-flex justify-content-between align-items-center me-2">
         <div>
-          <input
-            type="text"
-            style={{ borderRadius: "10px", margin: "10px" }}
-            placeholder="Search here"
-            onChange={(e) => setsearchvalue(e.target.value)}
-          />
-          <button className=" btn btn-primary" onClick={handleSearch}>
-            Search
-          </button>
+          <form onSubmit={(e)=>e.preventDefault()}>
+            <input
+              type="text"
+              style={{ borderRadius: "10px", margin: "10px" }}
+              placeholder="Search here"
+              onChange={(e) => setsearchvalue(e.target.value)}
+            />
+            <button className=" btn btn-primary" onClick={handleSearch}>
+              Search
+            </button>
+          </form>
         </div>
         <div>
           <button
